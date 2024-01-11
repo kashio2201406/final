@@ -19,7 +19,7 @@ try {
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/list.css" />
+    <link rel="stylesheet" href="css/top.css" />
     <title>県情報</title>
 </head>
 
