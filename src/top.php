@@ -18,58 +18,47 @@ try {
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/top.css" />
     <title>県情報</title>
 </head>
 
 <body>
     <h1>県情報</h1>
-    <hr />
-    <h3>県一覧表</h3>
-    <table id="tourism">
+    <hr>
+    <button onclick="location.href='ren6-5-input.php'">商品を登録する</button>
+    <table>
         <tr>
             <th>県名</th>
             <th>観光地名</th>
             <th>名物</th>
+            <th>説明</th>
         </tr>
         <?php
-        // Use the PDO instance $pdo already created in the previous code
-
-        try {
-            // テーブルから商品情報を取得
-            $sql = "SELECT * FROM tourism";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            die("データベースエラー：" . $e->getMessage());
+        $pdo = new PDO($connect, USER, PASS);
+        foreach ($pdo->query('select * from tourism') as $row) {
+            echo '<tr>';
+            echo '<td>', $row['name'], '</td>';
+            echo '<td>', $row['kanko_name'], '</td>';
+            echo '<td>', $row['Specialty'], '</td>';
+            echo '<td>', $row['exp'], '</td>';
+            echo '<td>';
+            echo '<form action="kousin.php" method="post">';
+            echo '<input type="hidden" name="id" value="', $row['name'], '">';
+            echo '<button type="submit">更新</button>';
+            echo '</form>';
+            echo '</td>';
+            echo '<td>';
+            echo '<form action="delete.php" method="post">';
+            echo '<input type="hidden" name="id" value="', $row['name'], '">';
+            echo '<button type="submit">削除</button>';
+            echo '</form>';
+            echo '</td>';
+            echo '</tr>';
+            echo "\n";
         }
         ?>
-
-        <?php
-        foreach ($products as $product) {
-            echo "<tr>";
-            echo "<td>{$product['name']}</td>";
-            echo "<td>{$product['kanko_name']}</td>";
-            echo "<td>{$product['Specialty']}</td>";
-            echo "<td>{$product['exp']}</td>";
-            echo "<td>";
-            echo "<button class='edit' onclick='handleButton({$product['id']}, \"編集\")'>編集</button>";
-            echo "<button class='delete' onclick='handleButton({$product['id']}, \"削除\")'>削除</button>";
-            echo "</td>";
-            echo "</tr>";
-        }
-        ?>
-
     </table>
-    <script>
-        // JavaScriptの処理を記述
-        function handleButton(productId, action) {
-            console.log(`商品ID ${productId} の${action}処理を実行`);
-            // 実際の処理はここに実装
-        }
-    </script>
 </body>
 
 </html>
