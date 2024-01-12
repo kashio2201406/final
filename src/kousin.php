@@ -15,13 +15,13 @@ try {
 }
 
 if (isset($_POST['id'])) {
-	$id = $_POST['id'];
 	$name = $_POST['name'];
-	$price = $_POST['price'];
+	$price = $_POST['kanko_name'];
+	$exp = $_POST['Specialty'];
 	$exp = $_POST['exp'];
 
 	$sql = $pdo->prepare('UPDATE tourism SET kanko_name = ?, Specialty = ?, exp = ? WHERE name = ?');
-	if ($sql->execute([$name, $price, $exp, $id])) {
+	if ($sql->execute([$name, $kanko_name, $Specialty, $exp])) {
 		echo '更新に成功しました。';
 	} else {
 		echo '更新に失敗しました。';
@@ -30,6 +30,7 @@ if (isset($_POST['id'])) {
 	echo '更新するデータがありません。';
 }
 ?>
+
 
 </table>
 <button onclick="location.href='top.php'">トップへ戻る</button>
