@@ -19,14 +19,27 @@ try {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/top.css" />
     <title>県情報</title>
 </head>
 
 <body>
-    <h1>県情報</h1>
-    <hr>
-    <button onclick="location.href='toroku_input.php'">商品を登録する</button>
+    <?php
+    $pdo = new PDO($connect, USER, PASS);
+    $sql = $pdo->prepare('INSERT INTO tourism (name, kanko_name, Specialty, exp) VALUES (?, ?, ?, ?)');
+
+    if (empty($_POST['name']) || empty($_POST['kanko_name']) || empty($_POST['Specialty']) || empty($_POST['exp'])) {
+        echo '全ての項目を入力してください。';
+    } else {
+        if ($sql->execute([htmlspecialchars($_POST['name']), htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['Specialty']), htmlspecialchars($_POST['exp'])])) {
+            echo '登録に成功しました。';
+        } else {
+            echo '登録に失敗しました。';
+        }
+    }
+    ?>
+
+    <br>
+    <hr><br>
     <table>
         <tr>
             <th>県名</th>
@@ -35,30 +48,20 @@ try {
             <th>説明</th>
         </tr>
         <?php
-        $pdo = new PDO($connect, USER, PASS);
-        foreach ($pdo->query('select * from tourism') as $row) {
+        foreach ($pdo->query('SELECT * FROM tourism') as $row) {
             echo '<tr>';
             echo '<td>', $row['name'], '</td>';
             echo '<td>', $row['kanko_name'], '</td>';
             echo '<td>', $row['Specialty'], '</td>';
             echo '<td>', $row['exp'], '</td>';
-            echo '<td>';
-            echo '<form action="kousin_input.php" method="post">';
-            echo '<input type="hidden" name="id" value="', $row['name'], '">';
-            echo '<button type="submit">更新</button>';
-            echo '</form>';
-            echo '</td>';
-            echo '<td>';
-            echo '<form action="delete.php" method="post">';
-            echo '<input type="hidden" name="id" value="', $row['name'], '">';
-            echo '<button type="submit">削除</button>';
-            echo '</form>';
-            echo '</td>';
             echo '</tr>';
             echo "\n";
         }
         ?>
     </table>
+    <form action="top.php" method="post">
+        <button type="submit">追加画面へ戻る</button>
+    </form>
 </body>
 
 </html>

@@ -31,9 +31,10 @@ if (isset($_POST['id'])) {
 <hr><br>
 <table>
     <tr>
-        <th>商品番号</th>
-        <th>商品名</th>
-        <th>価格</th>
+        <th>県名</th>
+        <th>観光地名</th>
+        <th>名物</th>
+        <th>説明</th>
     </tr>
     <?php
     foreach ($pdo->query('select * from tourism') as $row) {
