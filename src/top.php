@@ -19,46 +19,56 @@ try {
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="css/top.css" />
     <title>県情報</title>
 </head>
 
 <body>
-    <h1>県情報</h1>
-    <hr>
-    <button onclick="location.href='toroku_input.php'">商品を登録する</button>
-    <table>
-        <tr>
-            <th>県名</th>
-            <th>観光地名</th>
-            <th>名物</th>
-            <th>説明</th>
-        </tr>
-        <?php
-        $pdo = new PDO($connect, USER, PASS);
-        foreach ($pdo->query('select * from tourism') as $row) {
-            echo '<tr>';
-            echo '<td>', $row['name'], '</td>';
-            echo '<td>', $row['kanko_name'], '</td>';
-            echo '<td>', $row['Specialty'], '</td>';
-            echo '<td>', $row['exp'], '</td>';
-            echo '<td>';
-            echo '<form action="kousin_input.php" method="post">';
-            echo '<input type="hidden" name="id" value="', $row['name'], '">';
-            echo '<button type="submit">更新</button>';
-            echo '</form>';
-            echo '</td>';
-            echo '<td>';
-            echo '<form action="delete.php" method="post">';
-            echo '<input type="hidden" name="id" value="', $row['name'], '">';
-            echo '<button type="submit">削除</button>';
-            echo '</form>';
-            echo '</td>';
-            echo '</tr>';
-            echo "\n";
-        }
-        ?>
-    </table>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">県情報</h1>
+            <hr>
+            <button class="custom-button button is-success" onclick="location.href='toroku_input.php'">商品を登録する</button>
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>県名</th>
+                        <th>観光地名</th>
+                        <th>名物</th>
+                        <th>説明</th>
+                        <th>更新</th>
+                        <th>削除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($pdo->query('select * from tourism') as $row) {
+                        echo '<tr>';
+                        echo '<td>', $row['name'], '</td>';
+                        echo '<td>', $row['kanko_name'], '</td>';
+                        echo '<td>', $row['Specialty'], '</td>';
+                        echo '<td>', $row['exp'], '</td>';
+                        echo '<td>';
+                        echo '<form action="kousin_input.php" method="post">';
+                        echo '<input type="hidden" name="id" value="', $row['name'], '">';
+                        echo '<button class="button is-info" type="submit">更新</button>';
+                        echo '</form>';
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<form action="delete.php" method="post">';
+                        echo '<input type="hidden" name="id" value="', $row['name'], '">';
+                        echo '<button class="button is-danger" type="submit">削除</button>';
+                        echo '</form>';
+                        echo '</td>';
+                        echo '</tr>';
+                        echo "\n";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </body>
 
 </html>

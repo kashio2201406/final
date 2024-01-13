@@ -19,44 +19,39 @@ try {
 
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<link rel="stylesheet" href="css/kousin_input.css">
 	<title>県情報</title>
 </head>
 
 <body>
-	<table>
-		<tr>
-			<th>県名</th>
-			<th>観光地名</th>
-			<th>名物</th>
-			<th>説明</th>
-		</tr>
-		<?php
-		$pdo = new PDO($connect, USER, PASS);
-		$sql = $pdo->prepare('select * from tourism where name=?');
-		$sql->execute(array($_POST['id']));
-		foreach ($sql as $row) {
-			echo '<tr>';
-			echo '<form action="kousin_output.php" method="post">';
-			echo '<td> ';
-			echo '<input type="text" name="name" value="', $row['name'], '">';
-			echo '</td> ';
-			echo '<td>';
-			echo '<input type="text" name="kanko_name" value="', $row['kanko_name'], '">';
-			echo '</td> ';
-			echo '<td>';
-			echo ' <input type="text" name="Specialty" value="', $row['Specialty'], '">';
-			echo '</td> ';
-			echo '<td>';
-			echo ' <input type="text" name="exp" value="', $row['exp'], '">';
-			echo '</td> ';
-			echo '<td><input type="submit" value="更新"></td>';
-			echo '</form>';
-			echo '</tr>';
-			echo "\n";
-		}
-		?>
-	</table>
-	<button onclick="location.href='ren6-8-top.php'">トップへ戻る</button>
+	<section class="section">
+		<div class="container">
+			<h1 class="title">県情報更新画面</h1>
+			<table class="table is-fullwidth">
+				<tbody>
+					<?php
+					$pdo = new PDO($connect, USER, PASS);
+					$sql = $pdo->prepare('select * from tourism where name=?');
+					$sql->execute(array($_POST['id']));
+					foreach ($sql as $row) {
+						echo '<tr>';
+						echo '<form class="columns is-vcentered" action="kousin_output.php" method="post">';
+						echo '<td class="column"> <input class="input" type="text" name="name" value="', $row['name'], '"></td>';
+						echo '<td class="column"><input class="input" type="text" name="kanko_name" value="', $row['kanko_name'], '"></td>';
+						echo '<td class="column"> <input class="input" type="text" name="Specialty" value="', $row['Specialty'], '"></td>';
+						echo '<td class="column"> <input class="input" type="text" name="exp" value="', $row['exp'], '"></td>';
+						echo '<td class="column"><input class="button is-success" type="submit" value="更新"></td>';
+						echo '</form>';
+						echo '</tr>';
+						echo "\n";
+					}
+					?>
+				</tbody>
+			</table>
+			<button class="button is-info" onclick="location.href='ren6-8-top.php'">トップへ戻る</button>
+		</div>
+	</section>
 </body>
 
 </html>

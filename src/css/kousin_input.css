@@ -1,0 +1,16 @@
+body {
+  margin: 10px;
+}
+
+table {
+  margin-top: 10px;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+form {
+  margin: 0;
+}
