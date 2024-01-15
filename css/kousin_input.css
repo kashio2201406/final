@@ -14,3 +14,7 @@ td {
 form {
   margin: 0;
 }
+td,
+div.ken {
+  display: block;
+}

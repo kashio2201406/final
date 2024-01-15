@@ -37,9 +37,13 @@ try {
 					foreach ($sql as $row) {
 						echo '<tr>';
 						echo '<form class="columns is-vcentered" action="kousin_output.php" method="post">';
+						echo '<td><div class="ken"><label class="label">県名</label></div></td>';
 						echo '<td class="column"> <input class="input" type="text" name="name" value="', $row['name'], '"></td>';
+						echo '<td><div class="ken"><label class="label">観光地名</label></div></td>';
 						echo '<td class="column"><input class="input" type="text" name="kanko_name" value="', $row['kanko_name'], '"></td>';
+						echo '<td><div class="ken"><label class="label">名物</label></div></td>';
 						echo '<td class="column"> <input class="input" type="text" name="Specialty" value="', $row['Specialty'], '"></td>';
+						echo '<td><div class="ken"><label class="label">説明</label></div></td>';
 						echo '<td class="column"> <input class="input" type="text" name="exp" value="', $row['exp'], '"></td>';
 						echo '<td class="column"><input class="button is-success" type="submit" value="更新"></td>';
 						echo '</form>';
@@ -49,7 +53,7 @@ try {
 					?>
 				</tbody>
 			</table>
-			<button class="button is-info" onclick="location.href='ren6-8-top.php'">トップへ戻る</button>
+			<button class="button is-info" onclick="location.href='top.php'">トップへ戻る</button>
 		</div>
 	</section>
 </body>

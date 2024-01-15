@@ -13,42 +13,55 @@ try {
 } catch (PDOException $e) {
     die("データベース接続エラー：" . $e->getMessage());
 }
-
-if (isset($_POST['id'])) {
-    $id = $_POST['id'];
-    $sql = $pdo->prepare('DELETE FROM tourism WHERE name = ?');
-    if ($sql->execute([$id])) {
-        echo '削除に成功しました。';
-    } else {
-        echo '削除に失敗しました。';
-    }
-} else {
-    echo '削除するデータがありません。';
-}
 ?>
 
-<br>
-<hr><br>
-<table>
-    <tr>
-        <th>県名</th>
-        <th>観光地名</th>
-        <th>名物</th>
-        <th>説明</th>
-    </tr>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>県情報</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
     <?php
-    foreach ($pdo->query('select * from tourism') as $row) {
-        echo '<tr>';
-        echo '<td>', $row['name'], '</td>';
-        echo '<td>', $row['kanko_name'], '</td>';
-        echo '<td>', $row['Specialty'], '</td>';
-        echo '<td>', $row['exp'], '</td>';
-        echo '</tr>';
-        echo "\n";
+    if (isset($_POST['id'])) {
+        $id = $_POST['id'];
+        $sql = $pdo->prepare('DELETE FROM tourism WHERE name = ?');
+        if ($sql->execute([$id])) {
+            echo '<h1 class="title is-size-4 has-text-success mt-4">削除に成功しました。</h1>';
+        } else {
+            echo '<h1 class="title is-size-4 has-text-danger mt-4">削除に失敗しました。</h1>';
+        }
+    } else {
+        echo '<h1 class="title is-size-4 mt-4">削除するデータがありません。</h1>';
     }
     ?>
-</table>
-<button onclick="location.href='top.php'">トップへ戻る</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>県名</th>
+                <th>観光地名</th>
+                <th>名物</th>
+                <th>説明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($pdo->query('select * from tourism') as $row) {
+                echo '<tr>';
+                echo '<td>', $row['name'], '</td>';
+                echo '<td>', $row['kanko_name'], '</td>';
+                echo '<td>', $row['Specialty'], '</td>';
+                echo '<td>', $row['exp'], '</td>';
+                echo '</tr>';
+                echo "\n";
+            }
+            ?>
+        </tbody>
+    </table>
+    <button class="button is-info" onclick="location.href='top.php'">トップへ戻る</button>
 </body>
 
 </html>
