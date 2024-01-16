@@ -30,11 +30,46 @@ try {
             <h1 class="title">県情報</h1>
             <hr>
             <button class="custom-button button is-success" onclick="location.href='toroku_input.php'">商品を登録する</button>
+            <form action="" method="post">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="category">地域選択：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <div class="select">
+                                    <select name="category" id="category">
+                                        <option value="">すべての地域</option>
+                                        <option value="北海道">北海道</option>
+                                        <option value="東北">東北</option>
+                                        <option value="関東">関東</option>
+                                        <option value="中部">中部</option>
+                                        <option value="近畿">近畿</option>
+                                        <option value="中国">中国</option>
+                                        <option value="四国">四国</option>
+                                        <option value="九州">九州</option>
+                                        <option value="沖縄">沖縄</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary" type="submit">絞り込む</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
             <table class="table is-fullwidth">
                 <thead>
                     <tr>
                         <th>県名</th>
                         <th>観光地名</th>
+                        <th>カテゴリ</th>
                         <th>名物</th>
                         <th>説明</th>
                         <th>更新</th>
@@ -43,10 +78,26 @@ try {
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($pdo->query('select * from tourism') as $row) {
+                    $filterRegion = isset($_POST['category']) ? $_POST['category'] : '';
+
+                    $query = 'SELECT * FROM tourism';
+                    if (!empty($filterRegion)) {
+                        $query .= ' WHERE category = :category';
+                    }
+
+                    $stmt = $pdo->prepare($query);
+
+                    if (!empty($filterRegion)) {
+                        $stmt->bindParam(':category', $filterRegion, PDO::PARAM_STR);
+                    }
+
+                    $stmt->execute();
+
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo '<tr>';
                         echo '<td>', $row['name'], '</td>';
                         echo '<td>', $row['kanko_name'], '</td>';
+                        echo '<td>', $row['category'], '</td>';
                         echo '<td>', $row['Specialty'], '</td>';
                         echo '<td>', $row['exp'], '</td>';
                         echo '<td>';

@@ -14,7 +14,7 @@ h1 {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: -10px;
+  margin-top: 0px;
 }
 
 th,
@@ -45,4 +45,25 @@ button:hover {
 }
 .custom-button {
   margin-top: -30px; /* 任意の余白を指定 */
+}
+.custom-form {
+  margin-bottom: 0; /* フォームの下側の余白を0に設定 */
+}
+
+.custom-select {
+  margin-right: 10px; /* セレクトボックスの右側の余白を調整 */
+}
+
+.custom-button {
+  margin-left: 10px; /* ボタンの左側の余白を調整 */
+}
+.category {
+  margin-left: -10px; /* 調整したいマージンの値を設定 */
+}
+
+.field-body {
+  display: flex;
+  flex-basis: 0;
+  flex-grow: 0;
+  flex-shrink: 1;
 }

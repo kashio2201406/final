@@ -27,6 +27,13 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">カテゴリ</label>
+                    <div class="control">
+                        <input class="input" type="text" name="category">
+                    </div>
+                </div>
+
+                <div class="field">
                     <label class="label">名物</label>
                     <div class="control">
                         <input class="input" type="text" name="Specialty">

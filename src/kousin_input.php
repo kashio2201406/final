@@ -41,6 +41,8 @@ try {
 						echo '<td class="column"> <input class="input" type="text" name="name" value="', $row['name'], '"></td>';
 						echo '<td><div class="ken"><label class="label">観光地名</label></div></td>';
 						echo '<td class="column"><input class="input" type="text" name="kanko_name" value="', $row['kanko_name'], '"></td>';
+						echo '<td><div class="ken"><label class="label">カテゴリ</label></div></td>';
+						echo '<td class="column"><input class="input" type="text" name="category" value="', isset($row['category']) ? $row['category'] : '', '"></td>';
 						echo '<td><div class="ken"><label class="label">名物</label></div></td>';
 						echo '<td class="column"> <input class="input" type="text" name="Specialty" value="', $row['Specialty'], '"></td>';
 						echo '<td><div class="ken"><label class="label">説明</label></div></td>';

@@ -15,8 +15,6 @@ try {
 }
 ?>
 
-<!-- index.php -->
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -28,6 +26,7 @@ try {
 </head>
 
 <body>
+    <button class="button is-info" onclick="location.href='top.php'">トップ画面へ戻る</button>
     <section class="section">
         <div class="container">
             <?php
@@ -37,14 +36,16 @@ try {
                 echo '<div class="notification is-danger">県名を入力してください。</div>';
             } elseif (empty($_POST['kanko_name'])) {
                 echo '<div class="notification is-danger">観光地名を入力してください。</div>';
+            } elseif (empty($_POST['category'])) {
+                echo '<div class="notification is-danger">カテゴリを入力してください。</div>';
             } elseif (empty($_POST['Specialty'])) {
                 echo '<div class="notification is-danger">名物を入力してください。</div>';
             } elseif (empty($_POST['exp'])) {
                 echo '<div class="notification is-danger">説明を入力してください。</div>';
             } else {
-                $sql = $pdo->prepare('UPDATE tourism SET kanko_name=?, Specialty=?, exp=? WHERE name=?');
+                $sql = $pdo->prepare('UPDATE tourism SET kanko_name=?, category=?, Specialty=?, exp=? WHERE name=?');
 
-                if ($sql->execute([htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['Specialty']), $_POST['exp'], htmlspecialchars($_POST['name'])])) {
+                if ($sql->execute([htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['category']), htmlspecialchars($_POST['Specialty']), $_POST['exp'], htmlspecialchars($_POST['name'])])) {
                     echo '<div class="notification is-success">更新に成功しました。</div>';
                 } else {
                     echo '<div class="notification is-danger">更新に失敗しました。</div>';
@@ -57,6 +58,7 @@ try {
                     <tr>
                         <th>県名</th>
                         <th>観光地名</th>
+                        <th>カテゴリ</th>
                         <th>名物</th>
                         <th>説明</th>
                     </tr>
@@ -67,6 +69,7 @@ try {
                         echo '<tr>';
                         echo '<td>', $row['name'], '</td>';
                         echo '<td>', $row['kanko_name'], '</td>';
+                        echo '<td>', isset($row['category']) ? $row['category'] : '', '</td>';
                         echo '<td>', $row['Specialty'], '</td>';
                         echo '<td>', $row['exp'], '</td>';
                         echo '</tr>';
@@ -75,7 +78,7 @@ try {
                     ?>
                 </tbody>
             </table>
-            <button class="button is-info" onclick="location.href='top.php'">更新画面へ戻る</button>
+
         </div>
     </section>
 </body>

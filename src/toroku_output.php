@@ -24,20 +24,36 @@ try {
 </head>
 
 <body>
+    <form action="top.php" method="post">
+        <button class="button is-info" type="submit">トップ画面へ戻る</button>
+    </form>
     <?php
     $pdo = new PDO($connect, USER, PASS);
-    $sql = $pdo->prepare('INSERT INTO tourism (name, kanko_name, Specialty, exp) VALUES (?, ?, ?, ?)');
 
-    if (empty($_POST['name']) || empty($_POST['kanko_name']) || empty($_POST['Specialty']) || empty($_POST['exp'])) {
-        echo '<h2 class="is-size-4">全ての項目を入力してください。</h2>';
+    // 新しい県名が既にデータベースに存在するか確認
+    $checkQuery = 'SELECT COUNT(*) FROM tourism WHERE name = ?';
+    $checkStmt = $pdo->prepare($checkQuery);
+    $checkStmt->execute([$_POST['name']]);
+    $count = $checkStmt->fetchColumn();
+
+    if ($count > 0) {
+        echo '<h2 class="is-size-4 has-text-danger">エラー: すでに同じ県名が登録されています。</h2>';
     } else {
-        if ($sql->execute([htmlspecialchars($_POST['name']), htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['Specialty']), htmlspecialchars($_POST['exp'])])) {
-            echo '<h2 class="is-size-4 has-text-success">登録に成功しました。</h2>';
+        // 県名が存在しない場合はデータベースに追加
+        $sql = $pdo->prepare('INSERT INTO tourism (name, kanko_name, category, Specialty, exp) VALUES (?, ?, ?, ?, ?)');
+
+        if (empty($_POST['name']) || empty($_POST['kanko_name']) || empty($_POST['category']) || empty($_POST['Specialty']) || empty($_POST['exp'])) {
+            echo '<h2 class="is-size-4">全ての項目を入力してください。</h2>';
         } else {
-            echo '<h2 class="is-size-4 has-text-danger">登録に失敗しました。</h2>';
+            if ($sql->execute([htmlspecialchars($_POST['name']), htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['category']), htmlspecialchars($_POST['Specialty']), htmlspecialchars($_POST['exp'])])) {
+                echo '<h2 class="is-size-4 has-text-success">登録に成功しました。</h2>';
+            } else {
+                echo '<h2 class="is-size-4 has-text-danger">登録に失敗しました。</h2>';
+            }
         }
     }
     ?>
+
 
     <br>
     <hr><br>
@@ -46,16 +62,21 @@ try {
             <tr>
                 <th>県名</th>
                 <th>観光地名</th>
+                <th>カテゴリ</th>
                 <th>名物</th>
                 <th>説明</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($pdo->query('SELECT * FROM tourism') as $row) {
+            $query = 'SELECT * FROM tourism';
+            $stmt = $pdo->query($query);
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
                 echo '<td>', $row['name'], '</td>';
                 echo '<td>', $row['kanko_name'], '</td>';
+                echo '<td>', isset($row['category']) ? $row['category'] : 'N/A', '</td>';
                 echo '<td>', $row['Specialty'], '</td>';
                 echo '<td>', $row['exp'], '</td>';
                 echo '</tr>';
@@ -64,9 +85,7 @@ try {
             ?>
         </tbody>
     </table>
-    <form action="top.php" method="post">
-        <button class="button is-info" type="submit">追加画面へ戻る</button>
-    </form>
+
 </body>
 
 </html>

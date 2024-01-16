@@ -25,6 +25,7 @@ try {
 </head>
 
 <body>
+    <button class="button is-info" onclick="location.href='top.php'">トップへ戻る</button>
     <?php
     if (isset($_POST['id'])) {
         $id = $_POST['id'];
@@ -38,6 +39,7 @@ try {
         echo '<h1 class="title is-size-4 mt-4">削除するデータがありません。</h1>';
     }
     ?>
+    <!-- 削除画面の表を更新 -->
     <table class="table">
         <thead>
             <tr>
@@ -45,6 +47,8 @@ try {
                 <th>観光地名</th>
                 <th>名物</th>
                 <th>説明</th>
+                <th>カテゴリ</th> <!-- カテゴリ列を追加 -->
+                <th>削除</th>
             </tr>
         </thead>
         <tbody>
@@ -55,13 +59,16 @@ try {
                 echo '<td>', $row['kanko_name'], '</td>';
                 echo '<td>', $row['Specialty'], '</td>';
                 echo '<td>', $row['exp'], '</td>';
+                echo '<td>', $row['category'], '</td>';
+                echo '<td>';
+                echo '<form action="delete.php" method="post">';
+                echo '<input type="hidden" name="id" value="', $row['name'], '">';
+                echo '<button class="button is-danger" type="submit">削除</button>';
+                echo '</form>';
+                echo '</td>';
                 echo '</tr>';
                 echo "\n";
             }
             ?>
         </tbody>
     </table>
-    <button class="button is-info" onclick="location.href='top.php'">トップへ戻る</button>
-</body>
-
-</html>
