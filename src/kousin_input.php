@@ -38,7 +38,7 @@ try {
 						echo '<tr>';
 						echo '<form class="columns is-vcentered" action="kousin_output.php" method="post">';
 						echo '<td><div class="ken"><label class="label">県名</label></div></td>';
-						echo '<td class="column"> <input class="input" type="text" name="name" value="', $row['name'], '"></td>';
+						echo '<td class="column">', $row['name'], '</td>';
 						echo '<td><div class="ken"><label class="label">観光地名</label></div></td>';
 						echo '<td class="column"><input class="input" type="text" name="kanko_name" value="', $row['kanko_name'], '"></td>';
 						echo '<td><div class="ken"><label class="label">カテゴリ</label></div></td>';
