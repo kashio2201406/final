@@ -14,7 +14,6 @@ try {
     die("データベース接続エラー：" . $e->getMessage());
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 
