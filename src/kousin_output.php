@@ -32,9 +32,7 @@ try {
             <?php
             $pdo = new PDO($connect, USER, PASS);
 
-            if (empty($_POST['name'])) {
-                echo '<div class="notification is-danger">県名を入力してください。</div>';
-            } elseif (empty($_POST['kanko_name'])) {
+            if (empty($_POST['kanko_name'])) {
                 echo '<div class="notification is-danger">観光地名を入力してください。</div>';
             } elseif (empty($_POST['category'])) {
                 echo '<div class="notification is-danger">カテゴリを入力してください。</div>';
@@ -45,7 +43,7 @@ try {
             } else {
                 $sql = $pdo->prepare('UPDATE tourism SET kanko_name=?, category=?, Specialty=?, exp=? WHERE name=?');
 
-                if ($sql->execute([htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['category']), htmlspecialchars($_POST['Specialty']), $_POST['exp'], htmlspecialchars($_POST['name'])])) {
+                if ($sql->execute([htmlspecialchars($_POST['kanko_name']), htmlspecialchars($_POST['category']), htmlspecialchars($_POST['Specialty']), $_POST['exp'], $_POST['ken']])) {
                     echo '<div class="notification is-success">更新に成功しました。</div>';
                 } else {
                     echo '<div class="notification is-danger">更新に失敗しました。</div>';
